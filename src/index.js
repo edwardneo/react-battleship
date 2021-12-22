@@ -1,17 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+function Indicator(props) {
+    return (
+        <span className={props.hit ? 'indicator-hit' : 'indicator-miss'} />
+    )
+}
+
+function Cell(props) {
+    return (
+        <button
+            className='cell'
+            onClick={props.onClick}
+        >
+        {
+            props.value ?
+            <Indicator hit={props.value === 'H'} /> :
+            null
+        }
+        </button>
+    )
+}
+
+function Board(props) {
+    const [grid, setGrid] = useState(Array(10).fill(Array(10).fill(null)));
+
+    function handleClick(r, c) {
+        const newGrid = grid.map((row) => row.slice());
+        newGrid[r][c] = 'M'
+        setGrid(newGrid)
+    }
+
+    return (
+        <div>
+            {grid.map(
+                (row, r) => {
+                    return (
+                        <div className='board-row'>
+                            {row.map(
+                                (col, c) => {
+                                    return (
+                                        <Cell
+                                            value={grid[r][c]}
+                                            onClick={() => handleClick(r, c)}
+                                        />
+                                    )
+                                }
+                            )}
+                        </div>
+                    );
+                }
+            )}
+        </div>
+    )
+}
+
+function Game(props) {
+    return (
+        <div className='game'>
+            <div className='game-board'>
+                <Board />
+            </div>
+        </div>
+    );
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Game />,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
