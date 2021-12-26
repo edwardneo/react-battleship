@@ -1,21 +1,25 @@
 import React from 'react';
-import Indicator from '../visuals/Indicator'
 
-function Cell(props) {
+function Cell({ value, position, borderWidth, containsShip, unit, onClick, children }) {
+    const style = {
+        height: unit,
+        width: unit,
+        borderWidth: {borderWidth},
+    }
+
+    if (containsShip) {
+        style.zIndex = 0;
+        style.position = 'relative';
+    }
+
     return (
         <button
             className='cell'
-            style={{
-                lineHeight: props.unit,
-                height: props.unit,
-                width: props.unit,
-            }}
-            onClick={props.onClick}
+            style={style}
+            onClick={onClick}
         >
         {
-            props.value ?
-            <Indicator hit={props.value === 'H'} /> :
-            null
+            children
         }
         </button>
     )

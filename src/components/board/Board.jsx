@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Cell from './Cell'
+import CellWrapper from './CellWrapper';
+import Ship from '../ships/Ship';
 
-function Board(props) {
+function Board({ type, unit }) {
     const [grid, setGrid] = useState(Array(10).fill(Array(10).fill(null)));
 
     function handleClick(r, c) {
-        const type = props.type;
         switch (type) {
             case 'position':
                 break;
@@ -23,6 +23,20 @@ function Board(props) {
         setGrid(newGrid)
     }
 
+    function shipPresent(r, c) {
+        return false;
+    }
+
+    function renderShip(r, c) {
+        if (shipPresent(r, c)) {
+            return (
+                <Ship length={2} unit={unit} />
+            );
+        } else {
+            return null;
+        }
+    }
+
     return (
         <div>
             {grid.map(
@@ -32,12 +46,16 @@ function Board(props) {
                             {row.map(
                                 (col, c) => {
                                     return (
-                                        <Cell
-                                            type={props.type}
+                                        <CellWrapper
                                             value={grid[r][c]}
-                                            unit={props.unit}
+                                            position={[r, c]}
+                                            borderWidth={'1px ' + (c === 9 ? '1px ' : '0px ') + (r === 9 ? '1px ' : '0px ') + '1px'}
+                                            containsShip={shipPresent(r, c)}
+                                            unit={unit}
                                             onClick={() => handleClick(r, c)}
-                                        />
+                                        >
+                                            {renderShip(r, c)}
+                                        </CellWrapper>
                                     )
                                 }
                             )}

@@ -1,12 +1,22 @@
 import React from 'react';
+import { useDrag } from 'react-dnd';
+import { ItemTypes } from '../constants/ItemTypes';
 
-function Ship(props) {
+function Ship({ length, unit }) {
+    const [{isDragging}, drag] = useDrag(() => ({
+        type: ItemTypes.SHIP,
+        collect: (monitor) => ({
+            isDragging: ! !monitor.isDragging()
+        }),
+    }));
+
     return (
         <div
             className='ship'
+            ref={drag}
             style={{
-                width: props.unit,
-                height: props.unit * props.length,
+                width: unit,
+                height: unit * length + (length - 1),
             }}
         />
     )

@@ -4,22 +4,13 @@
     text-align: center;
 }
 
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-}
-
 .cell {
     background: #fff;
-    border: 1px solid #999;
+    border-style: solid;
+    border-color: #999;
     float: left;
-    font-size: 24px;
-    font-weight: bold;
-    margin-right: -1px;
-    margin-top: -1px;
     padding: 0;
-    text-align: center;
+    box-sizing: content-box;
 }
 
 .indicator {
@@ -27,14 +18,6 @@
     width: 25px;
     border-radius: 50%;
     display: inline-block;
-}
-
-.cell:focus {
-    outline: none;
-}
-
-.kbd-navigation .cell:focus {
-    background: #ddd;
 }
 
 .game-board {
@@ -58,7 +41,6 @@
 }
 
 .ship {
-    border: 1px solid #999;
     background: #ddd;
 }
 
