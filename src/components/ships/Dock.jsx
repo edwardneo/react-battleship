@@ -11,17 +11,17 @@ function Dock({ unit }) {
             }}
         >
             <div className='port'>
-                <Ship length={5} unit={unit} />
+                <Ship id='carrier' length={5} unit={unit} />
             </div>
             <div className='port'>
-                <Ship length={4} unit={unit} />
+                <Ship id='battleship' length={4} unit={unit} />
                 <div className='divider' style={{ height: unit }} />
-                <Ship length={2} unit={unit} />
+                <Ship id='destroyer' length={2} unit={unit} />
             </div>
             <div className='port'>
-                <Ship length={3} unit={unit} />
+                <Ship id='cruiser' length={3} unit={unit} />
                 <div className='divider' style={{ height: unit }} />
-                <Ship length={3} unit={unit} />
+                <Ship id='submarine' length={3} unit={unit} />
             </div>
         </div>
     )

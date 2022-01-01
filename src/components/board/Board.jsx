@@ -1,68 +1,34 @@
-import React, { useState } from 'react';
-import CellWrapper from './CellWrapper';
-import Ship from '../ships/Ship';
+import React, { useEffect, useState } from 'react';
+import Cell from './Cell';
+
+function renderCell(row, col, unit) {
+    return (<Cell
+                key={[row, col]}
+                position={[row, col]}
+                unit={unit}
+                borderWidth={borderWidth(row, col)}
+            />
+    );
+}
+
+function borderWidth(row, col) {
+    return '1px ' + (col === 9 ? '1px ' : '0px ') + (row === 9 ? '1px ' : '0px ') + '1px';
+}
 
 function Board({ type, unit }) {
-    const [grid, setGrid] = useState(Array(10).fill(Array(10).fill(null)));
-
-    function handleClick(r, c) {
-        switch (type) {
-            case 'position':
-                break;
-            case 'target':
-                fire(r, c);
-                break;
-            default:
-                break;
-        }
-    }
-
-    function fire(r, c) {
-        const newGrid = grid.map((row) => row.slice());
-        newGrid[r][c] = 'M'
-        setGrid(newGrid)
-    }
-
-    function shipPresent(r, c) {
-        return false;
-    }
-
-    function renderShip(r, c) {
-        if (shipPresent(r, c)) {
-            return (
-                <Ship length={2} unit={unit} />
-            );
-        } else {
-            return null;
+    const cells = [];
+    for (let row=0; row<10; row++) {
+        for (let col=0; col<10; col++) {
+            cells.push(renderCell(row, col, unit));
         }
     }
 
     return (
-        <div>
-            {grid.map(
-                (row, r) => {
-                    return (
-                        <div className='board-row'>
-                            {row.map(
-                                (col, c) => {
-                                    return (
-                                        <CellWrapper
-                                            value={grid[r][c]}
-                                            position={[r, c]}
-                                            borderWidth={'1px ' + (c === 9 ? '1px ' : '0px ') + (r === 9 ? '1px ' : '0px ') + '1px'}
-                                            containsShip={shipPresent(r, c)}
-                                            unit={unit}
-                                            onClick={() => handleClick(r, c)}
-                                        >
-                                            {renderShip(r, c)}
-                                        </CellWrapper>
-                                    )
-                                }
-                            )}
-                        </div>
-                    );
-                }
-            )}
+        <div
+            className='board'
+            style={{ height: unit * 10 + 11, width: unit * 10 + 11}}
+        >
+            {cells}
         </div>
     )
 }

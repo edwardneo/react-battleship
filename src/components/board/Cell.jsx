@@ -1,27 +1,23 @@
 import React from 'react';
+import CellTarget from './CellTarget';
 
-function Cell({ value, position, borderWidth, containsShip, unit, onClick, children }) {
+function Cell({ position, unit, borderWidth,onDrop}) {
     const style = {
+        borderWidth: borderWidth,
         height: unit,
         width: unit,
-        borderWidth: {borderWidth},
-    }
-
-    if (containsShip) {
-        style.zIndex = 0;
-        style.position = 'relative';
     }
 
     return (
-        <button
+        <div
             className='cell'
             style={style}
-            onClick={onClick}
         >
-        {
-            children
-        }
-        </button>
+            <CellTarget
+                position={position}
+                unit={unit}
+            />
+        </div>
     )
 }
 
