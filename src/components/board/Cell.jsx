@@ -1,9 +1,10 @@
 import React from 'react';
 import CellTarget from './CellTarget';
+import { genBorderWidth } from '../util/CellUtils';
 
-function Cell({ position, unit, borderWidth,onDrop}) {
+export default function Cell({ pos, unit, onCellDrop, canDrop, children }) {
     const style = {
-        borderWidth: borderWidth,
+        borderWidth: genBorderWidth(pos),
         height: unit,
         width: unit,
     }
@@ -14,11 +15,11 @@ function Cell({ position, unit, borderWidth,onDrop}) {
             style={style}
         >
             <CellTarget
-                position={position}
-                unit={unit}
-            />
+                onCellDrop={onCellDrop}
+                canDrop={canDrop}
+            >
+                {children}
+            </CellTarget>
         </div>
     )
 }
-
-export default Cell;

@@ -1,27 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemTypes } from '../constants/ItemTypes'
-import Ship from '../ships/Ship';
 
-function renderShip(item, unit) {
-    if (item) {
-        return (
-            <Ship
-                id={item.id}
-                length={item.length}
-                unit={unit}
-            />
-        )
-    } else {
-        return null;
-    }
-}
-
-function CellTarget({ position, unit }) {
-    const [ship, setShip] = useState(null);
+export default function CellTarget({ onCellDrop, canDrop, children }) {
     const [, drop] = useDrop(() => ({
         accept: ItemTypes.SHIP,
-        drop: (item) => { setShip(item, unit) },
+        drop: onCellDrop,
+        canDrop: (item, monitor) => {
+            return canDrop(item);
+        }
     }));
 
     return (
@@ -29,9 +16,7 @@ function CellTarget({ position, unit }) {
             className='cell-target'
             ref={drop}
         >
-            {renderShip(ship, unit)}
+            {children}
         </div>
     );
 }
-
-export default CellTarget;
